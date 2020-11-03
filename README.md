@@ -15,6 +15,7 @@ model里面是定义的resnet_ibn_a, resnet_ibn_bi 以及seresnet_ibn_a模型
 processor包含训练和预测代码
 solver里面包含模型训练求解器，本次比赛采用的是SGD+Warmup
 utils里面主要是对图片向量化之后的特征，进行reranking计算距离矩阵
+ronghe.py主要是三折的 effb5以及ibn_a、ibn_b计算的距离矩阵进行融合
 ## 运行顺序   
 模型训练 python train.py --config_file configs/naic_round2_model_b.yml  
 模型推理 python test.py --config_file configs/naic_round2_model_b.yml  
