@@ -1,0 +1,63 @@
+MODEL:
+  PRETRAIN_CHOICE: 'finetune'
+  PRETRAIN_PATH: '/home/jiangfuxin/.cache/torch/hub/checkpoints/resnet101_ibn_a-59ea0ac6.pth'
+  METRIC_LOSS_TYPE: 'triplet'
+  IF_LABELSMOOTH: 'on'
+  IF_WITH_CENTER: 'no'
+  NAME: 'resnet101_ibn_a'
+  DEVICE_ID: ('0,1')
+  ID_LOSS_TYPE: 'softmax'
+  POOLING_METHOD: 'GeM'
+  ID_LOSS_WEIGHT: 1.0
+  TRIPLET_LOSS_WEIGHT: 1.0
+  WEIGHTED_TRIPLET: False
+  NO_MARGIN: True
+
+INPUT:
+  SIZE_TRAIN: [224, 224]
+  SIZE_TEST: [224, 224]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 5
+
+DATASETS:
+  NAMES: ('huawei')
+  ROOT_DIR: ('../train_data')
+  HARD_AUG: True
+
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 40
+
+SOLVER:
+  OPTIMIZER_NAME: 'SGD'
+  MAX_EPOCHS: 90
+  BASE_LR: 0.02
+  IMS_PER_BATCH: 128
+  STEPS: [40, 70]
+  GAMMA: 0.1
+  WARMUP_FACTOR: 0.01
+  WARMUP_EPOCHS: 10
+  WARMUP_METHOD: 'linear'
+  LARGE_FC_LR: False
+  CHECKPOINT_PERIOD: 1
+  LOG_PERIOD: 400
+  EVAL_PERIOD: 10000
+  COSINE_MARGIN: 0.3
+  COSINE_SCALE: 30
+  CENTER_LOSS_WEIGHT: 0.0003
+  FP16: False
+
+TEST:
+  IMS_PER_BATCH: 256
+  RE_RANKING: False
+  WEIGHT: 'model_our/1229-a-1/resnet101_ibn_a_0.736.pth'
+  NECK_FEAT: 'after'
+  FEAT_NORM: 'yes'
+  FLIP_FEATS: 'on'
+  PATH: '../test_data_A'
+  
+OUTPUT_DIR: "model_our/1229-a-1/"
+
+
